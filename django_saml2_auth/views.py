@@ -23,7 +23,7 @@ from django.http import HttpResponseRedirect
 from django.utils.http import is_safe_url
 
 from rest_auth.utils import jwt_encode
-
+from django.views.generic import TemplateView
 # default User or custom User. Now both will work.
 User = get_user_model()
 
@@ -129,9 +129,11 @@ def _get_saml_client(domain):
 
 @login_required
 def welcome(r):
+    print("ffff<<<<<<<<<", r.user)
     try:
-        return render(r, 'django_saml2_auth/welcome.html', {'user': r.user})
+        return render(r, 'templates/django_saml2_auth/welcome.html', {'user': r.user})
     except TemplateDoesNotExist:
+        print("rrrrrrrr")
         return HttpResponseRedirect(_default_next_url())
 
 
@@ -265,3 +267,11 @@ def signin(r):
 def signout(r):
     logout(r)
     return render(r, 'django_saml2_auth/signout.html')
+
+# @login_required()
+def TestView(TemplateView):
+    template_name = "kukkker.html"
+
+    def get(self, request, *args, **kwargs):
+        print("><<<<<<????????")
+        return self.render_to_response({})

@@ -18,7 +18,7 @@ from django.urls import path
 from django.urls import include
 from django.conf.urls import url
 import django_saml2_auth.views
-
+from test_sml.views import TestView
 urlpatterns = [
     path('admin/logout/', django_saml2_auth.views.signout),
     path('admin/', admin.site.urls),
@@ -34,6 +34,7 @@ urlpatterns = [
     url(r'^accounts/login/$', django_saml2_auth.views.signin),
     url(r'^accounts/logout/$', django_saml2_auth.views.signout),
     url(r'', django_saml2_auth.views.signin),
+    path('test_saml/', TestView, name="test_saml"),
 
     # The following line will replace the admin login with SAML2 (optional)
     # If you want to specific the after-login-redirect-URL, use parameter "?next=/the/path/you/want"

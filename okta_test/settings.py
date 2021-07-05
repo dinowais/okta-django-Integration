@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_saml2_auth',
-    'saml2'
+    'saml2',
+    'test_sml'
 ]
 
 MIDDLEWARE = [
@@ -74,11 +75,11 @@ WSGI_APPLICATION = 'okta_test.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
+import os
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -128,11 +129,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SAML2_AUTH = {
     # Metadata is required, choose either remote url or local file path
-    'METADATA_AUTO_CONF_URL': ' https://dev-07324335.okta.com/app/exk11sw1yscnxYgN45d7/sso/saml/metadata',
+    'METADATA_AUTO_CONF_URL': 'https://dev-07324335.okta.com/app/exk11sw1yscnxYgN45d7/sso/saml/metadata',
     # 'METADATA_LOCAL_FILE_PATH': '[The metadata configuration file path]',
 
     # Optional settings below
-    # 'DEFAULT_NEXT_URL': '/worklist',  # Custom target redirect URL after the user get logged in. Default to /admin if not set. This setting will be overwritten if you have parameter ?next= specificed in the login URL.
+    # 'DEFAULT_NEXT_URL': '/test_saml',  # Custom target redirect URL after the user get logged in. Default to /admin if not set. This setting will be overwritten if you have parameter ?next= specificed in the login URL.
     # 'CREATE_USER': 'TRUE', # Create a new Django user when a new user logs in. Defaults to True.
     # 'NEW_USER_PROFILE': {
     #     'USER_GROUPS': [],  # The default group name when a new user logs in
@@ -151,7 +152,7 @@ SAML2_AUTH = {
     # #     'BEFORE_LOGIN': 'path.to.your.login.hook.method',
     # # },
     'ASSERTION_URL': 'http://localhost:8000', # Custom URL to validate incoming SAML requests against
-    'ENTITY_ID': 'http://localhost:8000', # Populates the Issuer element in authn request
+    'ENTITY_ID': 'http://localhost:8000/saml2_auth/acs/', # Populates the Issuer element in authn request
     'NAME_ID_FORMAT': "urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress", # Sets the Format property of authn NameIDPolicy element
     # 'USE_JWT': False, # Set this to True if you are running a Single Page Application (SPA) with Django Rest Framework (DRF), and are using JWT authentication to authorize client users
     # 'FRONTEND_URL': 'http://localhost:8000', # Redirect URL for the client if you are using JWT auth with DRF. See explanation below
